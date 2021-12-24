@@ -50,6 +50,8 @@ echo "-----> Installing Babashka $BABASHKA_VERSION"
 curl -sLO https://raw.githubusercontent.com/babashka/babashka/master/install
 chmod +x install
 ./install --dir $BUILD_DIR/.heroku/bb --version $BABASHKA_VERSION
+chmod +x $BUILD_DIR/.heroku/bb
+export PATH=$BUILD_DIR/.heroku/bb:$PATH
 
 # Check for vendored lein script
 if [ -x $BUILD_DIR/bin/lein ]; then
