@@ -44,7 +44,12 @@ export PATH=$BUILD_DIR/.heroku/clj/bin:$PATH
 
 echo "-----> Installing Babashka"
 # install babashka
-bash < <(curl -s https://raw.githubusercontent.com/babashka/babashka/master/install)
+BABASHKA_VERSION="${BABASHKA_VERSION:-0.7.0}"
+echo "-----> Installing Babashka $BABASHKA_VERSION"
+
+curl -sLO https://raw.githubusercontent.com/babashka/babashka/master/install
+chmod +x install
+./install --dir $BUILD_DIR/.heroku/bb --version $BABASHKA_VERSION
 
 # Check for vendored lein script
 if [ -x $BUILD_DIR/bin/lein ]; then
