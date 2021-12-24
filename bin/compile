@@ -42,6 +42,7 @@ mkdir -p $BUILD_DIR/.heroku/clj
 chmod +x $BUILD_DIR/.heroku/clj/bin/*
 export PATH=$BUILD_DIR/.heroku/clj/bin:$PATH
 
+echo "-----> Installing Babashka"
 # install babashka
 bash < <(curl -s https://raw.githubusercontent.com/babashka/babashka/master/install)
 
