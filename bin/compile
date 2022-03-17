@@ -42,6 +42,9 @@ mkdir -p $BUILD_DIR/.heroku/clj
 chmod +x $BUILD_DIR/.heroku/clj/bin/*
 export PATH=$BUILD_DIR/.heroku/clj/bin:$PATH
 
+# Start ssh agent (newer cli tools use it to access private repositories)
+eval "$(ssh-agent -s)"
+
 echo "-----> Installing Babashka"
 # install babashka
 BABASHKA_VERSION="${BABASHKA_VERSION:-0.7.0}"
