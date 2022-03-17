@@ -72,6 +72,29 @@ else
   mkdir -p "$BUILD_DIR/.lein"
   cp "$LEIN_JAR_CACHE_PATH" "$LEIN_JAR_SLUG_PATH"
 
+  # install rlwrap binary on lein 1.x
+  if [ "$RLWRAP" = "yes" ]; then
+    RLWRAP_BIN_URL="https://lang-jvm.s3.amazonaws.com/rlwrap-0.3.7"
+    RLWRAP_BIN_PATH=$BUILD_DIR"/.lein/bin/rlwrap"
+    echo "       Downloading: rlwrap-0.3.7"
+    mkdir -p $(dirname $RLWRAP_BIN_PATH)
+    curl --retry 3 --silent --show-error --max-time 60 -L -o $RLWRAP_BIN_PATH $RLWRAP_BIN_URL
+    chmod +x $RLWRAP_BIN_PATH
+  fi
+
+  # install lein script
+  LEIN_BIN_PATH=$BUILD_DIR"/.lein/bin/lein"
+  echo "       Writing: lein script"
+  mkdir -p $(dirname $LEIN_BIN_PATH)
+  cp $LEIN_BIN_SOURCE $LEIN_BIN_PATH
+  sed -i s/##LEIN_VERSION##/$LEIN_VERSION/ $LEIN_BIN_PATH
+fi
+
+# create user-level profiles
+mkdir -p $BUILD_DIR/.lein
+LEIN_PROFILES_SOURCE="$(dirname $0)/../opt/profiles.clj"
+cp -n $LEIN_PROFILES_SOURCE "$BUILD_DIR/.lein/profiles.clj"
+
 # install rlwrap binary, always needed for clj command, and also on old lein 1.x
 install_rlwrap "${BUILD_DIR}" "${CACHE_DIR}"
 
