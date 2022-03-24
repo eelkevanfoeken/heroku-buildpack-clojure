@@ -107,12 +107,6 @@ mkdir -p $BUILD_DIR/.lein
 LEIN_PROFILES_SOURCE="$(dirname $0)/../opt/profiles.clj"
 cp -n $LEIN_PROFILES_SOURCE "$BUILD_DIR/.lein/profiles.clj"
 
-
-# Start ssh agent (newer cli tools use it to access private repositories)
-eval "$(ssh-agent -s)"
-
-echo "$GITHUB_AUTH_TOKEN" | ssh-add -
-
 echo "-----> Installing Babashka"
 # install babashka
 BABASHKA_VERSION="${BABASHKA_VERSION:-0.7.0}"
